@@ -13,14 +13,23 @@ if ( !firebase.apps.length ){
   firebase.initializeApp( firebaseConfig )
 }
 
+import {HomeScreen} from './components/HomeScreen'
+import {DetailScreen, TaskDetailScreen} from './components/TaskDetailScreen'
+
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name ="Task Management" component={HomeScreen}/>
+        <Stack.Screen name ="Task Detail" component={TaskDetailScreen}/>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
+
+//initialize
+const Stack = createStackNavigator()
 
 const styles = StyleSheet.create({
   container: {
