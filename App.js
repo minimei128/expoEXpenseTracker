@@ -73,12 +73,27 @@ export default function App() {
   //list variable 
   const listData = Data
 
+  const register = (email,password) => {
+    firebase.auth().createUserWithEmailAndPassword( email, password)
+    .catch (error => console.log(error))
+  }
+
+  firebase.auth().onAuthStateChanged( (user) => {
+    if (user){
+      console.log('user logged in')
+    }
+    else{
+      console.log('user not logged in')
+    }
+  })
   return (
 
     <NavigationContainer>
       {/* Each item in the stack is a screen */}
       <Stack.Navigator>
-        <Stack.Screen name="Register" component={AuthScreen}/>
+        <Stack.Screen name="Register">
+          {(props) => <AuthScreen {...props} signup={register}/>}
+        </Stack.Screen>
         <Stack.Screen name ="Task Management">
             {(props) => <HomeScreen {...props} text="Hello Home Screen" data={listData}/>}
           </Stack.Screen> 
