@@ -6,8 +6,34 @@ export const AuthScreen = (props) => {
     //create the login hook
     //pass 2 objects, login is a variable, a state and setLogin is a function to call to change the state
     //when it's true shows the login screen, false shows the register screen
-    //set default state to false
     const [login,setLogin] = useState(false)
+    //hooks for validation
+    const [validEmail, setValidEmail] = useState(false)
+    const [validPassword, setValidPassword] = useState(false)
+
+    const navigation = useNavigation()
+
+    //function: email validation
+    const validateEmail = (email) => {
+        //check if the '@' isn't at the beginning and for the '.' in the email
+        if(email.indexOf('@') > 0 && email.indexOf('.') > 0 ){
+            setValidEmail(true)
+        }
+        else{
+            setValidEmail(false)
+        }
+    }
+
+    //function: password validation
+    const validatePassword = (password) => {
+        //check if the password is minmun 8 characters long
+        if( password.length >= 8){
+            setValidPassword( true )
+        }
+        else{
+            setValidPassword( false)
+        }
+    }
 
     if (!login){
         return (
@@ -16,20 +42,30 @@ export const AuthScreen = (props) => {
             {/* user input email */}
                 <TextInput
                 style={styles.input} 
-                placeholder="you@email.com"/>
+                placeholder="Email"
+                onChangeText={(email) => validateEmail(email)}
+                />
             {/* user input password */}
                 <TextInput
                 style={styles.input}
-                placeholder="min 8 characters"
+                placeholder="Password"
                 secureTextEntry={true}
+                onChangeText={(password) => validatePassword(password)}
                 />
             {/* Register button */}
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity 
+                style={!validEmail || !validPassword ? styles.buttonDisabled : styles.buttonDisabled}
+                disabled={ !validEmail || !validPassword ? true : false}>
                     <Text style={styles.buttonText}>Register</Text>
                 </TouchableOpacity>
                 <Text style={styles.altText}>Already have an account?</Text>
-                <TouchableOpacity style={styles.altButton}>
-                    <Text style={styles.altButtonText}>Login</Text>
+                <TouchableOpacity 
+                style={styles.altButton}
+                onPress={()=> {
+                        setLogin(true)
+                        navigation.setOptions({title: 'Sign In'})
+                        }}>
+                    <Text style={styles.altButtonText}>Sign In</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -41,11 +77,11 @@ export const AuthScreen = (props) => {
             {/* user input email */}
                 <TextInput
                 style={styles.input} 
-                placeholder="you@email.com"/>
+                placeholder="Email"/>
             {/* user input password */}
                 <TextInput
                 style={styles.input}
-                placeholder="min 8 characters"
+                placeholder="Password"
                 secureTextEntry={true}
                 />
             {/* Login button */}
@@ -53,7 +89,12 @@ export const AuthScreen = (props) => {
                     <Text style={styles.buttonText}>Login</Text>
                 </TouchableOpacity>
                 <Text style={styles.altText}>Don't have an account?</Text>
-                <TouchableOpacity style={styles.altButton}>
+                <TouchableOpacity 
+                style={styles.altButton}
+                onPress={()=> {
+                    setLogin(false)
+                    navigation.setOptions({title: 'Register'})
+                    }}>
                     <Text style={styles.altButtonText}>Register</Text>
                 </TouchableOpacity>
             </View>
@@ -80,6 +121,10 @@ const styles = StyleSheet.create({
     buttonText: {
         color: '#eeeeee',
         textAlign: 'center'
+    },
+    buttonDisabled: {
+        padding: 10,
+        backgroundColor: '#888888',
     },
     altText:{
         textAlign: 'center',
