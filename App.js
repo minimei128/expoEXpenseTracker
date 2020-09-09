@@ -15,6 +15,7 @@ if ( !firebase.apps.length ){
 
 import {HomeScreen} from './components/HomeScreen'
 import {TaskDetailScreen} from './components/TaskDetailScreen'
+import {AuthScreen} from './components/AuthScreen'
 
 const Data = [
   {
@@ -77,6 +78,7 @@ export default function App() {
     <NavigationContainer>
       {/* Each item in the stack is a screen */}
       <Stack.Navigator>
+        <Stack.Screen name="Register" component={AuthScreen}/>
         <Stack.Screen name ="Task Management">
             {(props) => <HomeScreen {...props} text="Hello Home Screen" data={listData}/>}
           </Stack.Screen> 
