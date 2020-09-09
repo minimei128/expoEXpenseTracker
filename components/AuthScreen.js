@@ -1,11 +1,9 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native'
 import {useNavigation} from '@react-navigation/native'
 
 export const AuthScreen = (props) => {
-    //create the login hook
-    //pass 2 objects, login is a variable, a state and setLogin is a function to call to change the state
-    //when it's true shows the login screen, false shows the register screen
+    //hook for login
     const [login,setLogin] = useState(false)
     //hooks for validation
     const [validEmail, setValidEmail] = useState(false)
@@ -16,6 +14,15 @@ export const AuthScreen = (props) => {
 
 
     const navigation = useNavigation()
+
+    useEffect(() => {
+        if( props.loggedIn ) {
+          navigation.reset({
+            index: 0,
+            routes: [{ name: "Home"}]
+          })
+        }
+      })
 
     //function: email validation
     const validateEmail = (email) => {
@@ -62,10 +69,12 @@ export const AuthScreen = (props) => {
                 <TouchableOpacity 
                 style={!validEmail || !validPassword ? styles.buttonDisabled : styles.buttonDisabled}
                 disabled={ !validEmail || !validPassword ? true : false}
-                onPress={() => {props.signup(email,password)}}>
+                onPress={() => {props.signup('register', email,password)}}>
                     <Text style={styles.buttonText}>Register</Text>
                 </TouchableOpacity>
+            {/* Already have an account? */}
                 <Text style={styles.altText}>Already have an account?</Text>
+            {/* Button: Sign In after registered as user  */}
                 <TouchableOpacity 
                 style={styles.altButton}
                 onPress={()=> {
@@ -84,18 +93,24 @@ export const AuthScreen = (props) => {
             {/* user input email */}
                 <TextInput
                 style={styles.input} 
-                placeholder="Email"/>
+                placeholder="Email"
+                onChangeText = {(email) => {setEmail(email)}}/>
             {/* user input password */}
                 <TextInput
                 style={styles.input}
                 placeholder="Password"
                 secureTextEntry={true}
+                onChangeText = {(password) => {setPassword(password)}}
                 />
             {/* Login button */}
-                <TouchableOpacity style={styles.button}>
-                    <Text style={styles.buttonText}>Login</Text>
+                <TouchableOpacity 
+                style={styles.button}
+                onPress={ () => {props.signup('login', email, password)}}>
+                    <Text style={styles.buttonText}>Sign In</Text>
                 </TouchableOpacity>
+            {/* Don't have an account? */}
                 <Text style={styles.altText}>Don't have an account?</Text>
+            {/* Button: To register when user don't have account */}
                 <TouchableOpacity 
                 style={styles.altButton}
                 onPress={()=> {

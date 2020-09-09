@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, {useState} from 'react';
+import { StyleSheet, Text, View} from 'react-native';
 import { NavigationContainer, StackActions } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
@@ -16,6 +16,7 @@ if ( !firebase.apps.length ){
 import {HomeScreen} from './components/HomeScreen'
 import {TaskDetailScreen} from './components/TaskDetailScreen'
 import {AuthScreen} from './components/AuthScreen'
+import {TouchableOpacity } from 'react-native-gesture-handler';
 
 const Data = [
   {
@@ -73,31 +74,61 @@ export default function App() {
   //list variable 
   const listData = Data
 
-  const register = (email,password) => {
-    firebase.auth().createUserWithEmailAndPassword( email, password)
+  //state to see whether user is login or not
+  const [auth,setAuth] = useState(false) 
+
+
+  const register = (intent, email,password) => {
+    if(intent == 'register'){
+      firebase.auth().createUserWithEmailAndPassword( email, password)
     .catch (error => console.log(error))
+    }
+    else if(intent == 'login'){
+      firebase.auth().signInWithEmailAndPassword( email, password)
+      .catch (error => console.log(error))
+    }
   }
 
   firebase.auth().onAuthStateChanged( (user) => {
     if (user){
+      setAuth(true)
       console.log('user logged in')
     }
     else{
+      setAuth(false)
       console.log('user not logged in')
     }
   })
+
+
   return (
 
     <NavigationContainer>
       {/* Each item in the stack is a screen */}
       <Stack.Navigator>
         <Stack.Screen name="Register">
-          {(props) => <AuthScreen {...props} signup={register}/>}
+          {(props) => <AuthScreen {...props} signup={register} loggedIn={auth}/>}
         </Stack.Screen>
-        <Stack.Screen name ="Task Management">
-            {(props) => <HomeScreen {...props} text="Hello Home Screen" data={listData}/>}
-          </Stack.Screen> 
-        <Stack.Screen name ="Task Detail" component={TaskDetailScreen}/>
+        
+        <Stack.Screen 
+          name="Home"
+          options={({navigation,route}) => ({
+            headerTitle: "Task Management",
+            headerRight: () => (
+              <TouchableOpacity style={styles.signout} onPress={ () => {
+                firebase.auth().signOut().then( () => {
+                  setAuth(false)
+                  navigation.reset({ index: 0, routes: [{name: "Register"}] })
+                })
+              }}>
+                <Text style={styles.signOutText}>Sign out</Text>
+              </TouchableOpacity>
+            )
+          })}
+        >
+          { (props) => <HomeScreen {...props} text="Hello Home Screen" data={listData} /> }
+        </Stack.Screen>
+        <Stack.Screen name ="Task_Detail" component={TaskDetailScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -19,7 +19,7 @@ export const HomeScreen = (props) => {
     )
     //function: each item navigate to show more detail
     const showDetail = ( item ) => {
-        navigation.navigate("Task Detail", item)
+        navigation.navigate("Task_Detail", item)
     }
 
     return (
