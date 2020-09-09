@@ -106,10 +106,11 @@ export default function App() {
     <NavigationContainer>
       {/* Each item in the stack is a screen */}
       <Stack.Navigator>
-        <Stack.Screen name="Register">
+        <Stack.Screen 
+          name="Register">
           {(props) => <AuthScreen {...props} signup={register} loggedIn={auth}/>}
         </Stack.Screen>
-        
+
         <Stack.Screen 
           name="Home"
           options={({navigation,route}) => ({
@@ -126,7 +127,7 @@ export default function App() {
             )
           })}
         >
-          { (props) => <HomeScreen {...props} text="Hello Home Screen" data={listData} /> }
+          { (props) => <HomeScreen {...props} data={listData} /> }
         </Stack.Screen>
         <Stack.Screen name ="Task_Detail" component={TaskDetailScreen}/>
       </Stack.Navigator>
@@ -144,4 +145,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  signout: {
+    backgroundColor: '#777777',
+    padding: 5
+  },
+  signOutText: {
+    color: '#cccccc'
+  },
+
 });

@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
-import {StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native'
+import {StyleSheet, Text, View, TextInput, TouchableOpacity, Image} from 'react-native'
 import {useNavigation} from '@react-navigation/native'
+
 
 export const AuthScreen = (props) => {
     //hook for login
@@ -52,6 +53,8 @@ export const AuthScreen = (props) => {
         return (
             //REGISTER VIEW
             <View style={styles.container}>
+                {/* Icons made by <a href="https://www.flaticon.com/authors/flat-icons" title="Flat Icons">Flat Icons</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a> */}
+                <Image style={styles.icon} source={require('../assets/logo.png')} />
             {/* user input email */}
                 <TextInput
                 style={styles.input} 
@@ -79,7 +82,8 @@ export const AuthScreen = (props) => {
                 style={styles.altButton}
                 onPress={()=> {
                         setLogin(true)
-                        navigation.setOptions({title: 'Sign In'})
+                        navigation.setOptions({title: 'Sign In',
+                    })
                         }}>
                     <Text style={styles.altButtonText}>Sign In</Text>
                 </TouchableOpacity>
@@ -115,11 +119,23 @@ export const AuthScreen = (props) => {
                 style={styles.altButton}
                 onPress={()=> {
                     setLogin(false)
-                    navigation.setOptions({title: 'Register'})
+                    navigation.setOptions({
+                    title: 'Register',
+                    headerStyle: {
+                        backgroundColor: '#f4511e',
+                      },
+                    headerTintColor: '#fff',
+                    headerTitleStyle: {
+                        fontWeight: 'bold',
+                        textAlign: 'center',
+                        alignSelf: 'center',
+                        flex: 1
+                      },
+                        })
                     }}>
                     <Text style={styles.altButtonText}>Register</Text>
                 </TouchableOpacity>
-            </View>
+        </View>
             
         )
     }
@@ -130,23 +146,36 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingHorizontal: 10,
     },
+    icon:{
+        width: 100,
+        height: 100,
+    },
     input: {
-        padding: 10,
+        
         borderWidth: 1,
-        borderColor: '#777777',
-        marginVertical: 20,
+        borderColor: '#D3D3D3',
+        borderRadius: 7,
+        height: 40,
+        paddingLeft: 6,
+        margin: 10
     },
     button: {
-        padding: 10,
-        backgroundColor:'#444444',
+        padding: 13,
+        backgroundColor:'#f4511e',
+        borderRadius: 7,
+        margin: 10
+    
     },
     buttonText: {
         color: '#eeeeee',
         textAlign: 'center'
     },
     buttonDisabled: {
-        padding: 10,
-        backgroundColor: '#888888',
+
+        backgroundColor: '#f4511e',
+        padding: 13,
+        borderRadius: 7,
+        margin: 10
     },
     altText:{
         textAlign: 'center',
@@ -158,7 +187,10 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     altButtonText:{
-        color: 'blue',
-        textAlign: 'center'
+        color: '#f4511e',
+        textAlign: 'center',
+        borderBottomWidth: 1,
+        borderBottomColor: '#cccccc',
+        paddingBottom: 10
     }
 })

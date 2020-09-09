@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Button, FlatList } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Button, FlatList, TextInput } from 'react-native';
 import {useNavigation} from '@react-navigation/native'
 
 //Task Management Planner Screen
@@ -23,8 +23,12 @@ export const HomeScreen = (props) => {
     }
 
     return (
-        <View>
-            <Text>{props.text}</Text>
+        <View style={homeStyle.container}>
+            <View>
+                <TextInput
+                style={homeStyle.input} 
+                placeholder="amount" />
+            </View>
             <FlatList
             data = {props.data}
             renderItem = {renderList}
@@ -50,6 +54,10 @@ const ListItem = (props) => {
 }
 
 const homeStyle = StyleSheet.create({
+    container:{
+        flex:1,
+        paddingHorizontal: 10,
+    },
     item: {
         paddingHorizontal: 15,
         paddingVertical: 20,
@@ -58,5 +66,14 @@ const homeStyle = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
 
-    }
+    },
+    input: {
+        padding: 10,
+        borderColor: '#cccccc',
+        borderWidth: 1,
+        borderRadius: 10,
+        backgroundColor: '#ffffff',
+        marginVertical: 15,
+    },
+
 })
