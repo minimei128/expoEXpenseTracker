@@ -13,10 +13,11 @@ export const Select = (props) => {
         key={index} 
         onPress={()=> { 
           setSelected(item.value)
+          props.onSelect( item.value )
           setVisible(false) 
         }} 
       >
-        <Text>{item.label}</Text>
+        <Text style={selectStyles.itemText}>{item.label}</Text>
       </TouchableOpacity>
     )
   })
@@ -62,11 +63,20 @@ const selectStyles = StyleSheet.create({
   selectItem: {
     paddingVertical: 10,
     paddingHorizontal: 5,
-    borderBottomColor: '#dddddd',
+    borderBottomColor: '#fff2e6',
     borderBottomWidth: 1,
+  },
+  itemText:{
+    color: 'black',
   },
   modalView: {
     marginTop: 180,
-    backgroundColor: 'lightyellow',
+    marginLeft: 10,
+    backgroundColor: 'orange',
+    width: 340,
+    borderStyle: 'solid',
+    borderColor: 'grey',
+    borderWidth: 1,
+    borderRadius: 5,
   },
 })

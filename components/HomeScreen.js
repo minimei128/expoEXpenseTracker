@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Button, FlatList, TextInput } from 'react-native';
 import {useNavigation} from '@react-navigation/native'
 import {Select} from './Select'
@@ -11,7 +11,9 @@ export const HomeScreen = (props) => {
           {label: "Groceries", value: "groceries"},
           {label: "Bills", value: "bills"},
         ]
-
+    const [category,setCategory] = useState(null)
+    const [amount,setAmount] = useState(0)
+    const [note,setNote] = useState(null)
     const navigation = useNavigation()
 
     //function: render out each task items on the list to the screen
@@ -35,7 +37,7 @@ export const HomeScreen = (props) => {
                 <TextInput
                 style={homeStyle.input} 
                 placeholder="amount" />
-                <Select items ={selectItems}/>
+                <Select items ={selectItems} onSelect={setCategory}/>
                 <TextInput 
                 style={homeStyle.input} 
                 placeholder="notes" 
