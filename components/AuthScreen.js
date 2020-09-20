@@ -53,8 +53,10 @@ export const AuthScreen = (props) => {
         return (
             //REGISTER VIEW
             <View style={styles.container}>
-                {/* Icons made by <a href="https://www.flaticon.com/authors/flat-icons" title="Flat Icons">Flat Icons</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a> */}
+                <View style={styles.logoWrapper}>
+                {/* Icons made by <a href="https://www.flaticon.com/authors/iconixar" title="iconixar">iconixar</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a> */}
                 <Image style={styles.icon} source={require('../assets/logo.png')} />
+                </View>
             {/* user input email */}
                 <TextInput
                 style={styles.input} 
@@ -82,7 +84,7 @@ export const AuthScreen = (props) => {
                 style={styles.altButton}
                 onPress={()=> {
                         setLogin(true)
-                        navigation.setOptions({title: 'Sign In',
+                        navigation.setOptions({title: 'Sign In'
                     })
                         }}>
                     <Text style={styles.altButtonText}>Sign In</Text>
@@ -94,6 +96,10 @@ export const AuthScreen = (props) => {
         return (
             //LOGIN VIEW
             <View style={styles.container}>
+                <View style={styles.logoWrapper}>
+                {/* Icons made by <a href="https://www.flaticon.com/authors/iconixar" title="iconixar">iconixar</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a> */}
+                    <Image style={styles.icon} source={require('../assets/logo.png')} />
+                </View>
             {/* user input email */}
                 <TextInput
                 style={styles.input} 
@@ -120,17 +126,7 @@ export const AuthScreen = (props) => {
                 onPress={()=> {
                     setLogin(false)
                     navigation.setOptions({
-                    title: 'Register',
-                    headerStyle: {
-                        backgroundColor: '#f4511e',
-                      },
-                    headerTintColor: '#fff',
-                    headerTitleStyle: {
-                        fontWeight: 'bold',
-                        textAlign: 'center',
-                        alignSelf: 'center',
-                        flex: 1
-                      },
+                    title: 'Register'
                         })
                     }}>
                     <Text style={styles.altButtonText}>Register</Text>
@@ -146,9 +142,16 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingHorizontal: 10,
     },
+    logoWrapper: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingVertical: 30
+    },
     icon:{
         width: 100,
         height: 100,
+        marginRight: 10
+        
     },
     input: {
         
@@ -157,7 +160,8 @@ const styles = StyleSheet.create({
         borderRadius: 7,
         height: 40,
         paddingLeft: 6,
-        margin: 10
+        margin: 10,
+        backgroundColor: 'white'
     },
     button: {
         padding: 13,
@@ -179,7 +183,7 @@ const styles = StyleSheet.create({
     },
     altText:{
         textAlign: 'center',
-        marginTop: 20
+        marginTop: 20,
     },
     altButton:{
         marginTop: 10,

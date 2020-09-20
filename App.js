@@ -106,7 +106,8 @@ export default function App() {
     <NavigationContainer>
       {/* Each item in the stack is a screen */}
       <Stack.Navigator>
-        <Stack.Screen 
+        <Stack.Screen
+
           name="Register">
           {(props) => <AuthScreen {...props} signup={register} loggedIn={auth}/>}
         </Stack.Screen>
@@ -154,3 +155,4 @@ const styles = StyleSheet.create({
   },
 
 });
+

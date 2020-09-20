@@ -1,9 +1,16 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Button, FlatList, TextInput } from 'react-native';
 import {useNavigation} from '@react-navigation/native'
-
+import {Select} from './Select'
 //Task Management Planner Screen
 export const HomeScreen = (props) => {
+    
+        const selectItems = [
+          {label: "Food", value: "food"},
+          {label: "Transport", value: "transport"},
+          {label: "Groceries", value: "groceries"},
+          {label: "Bills", value: "bills"},
+        ]
 
     const navigation = useNavigation()
 
@@ -28,13 +35,19 @@ export const HomeScreen = (props) => {
                 <TextInput
                 style={homeStyle.input} 
                 placeholder="amount" />
+                <Select items ={selectItems}/>
+                <TextInput 
+                style={homeStyle.input} 
+                placeholder="notes" 
+                onChangeText={ (note) => setNote(note)}/>
             </View>
+
             <FlatList
             data = {props.data}
             renderItem = {renderList}
             keyExtractor = { item => item.id}
             />
-
+            
             
         </View>
     )
