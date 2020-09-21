@@ -63,6 +63,7 @@ export default function App() {
     if(!dataRef) {
       return
     }
+    setUpdating(false)
     firebase.database().ref(`${dataRef}/items`).once('value')
     .then((snapshot) => {
       let data = snapshot.val()
@@ -76,8 +77,14 @@ export default function App() {
         })
       }
     })
+    setUpdating(true)
   }
 
+  // const updateData = (item) => {
+  //   const data = {amount: item.amount, note: item.note, category: item.category}
+  //   firebase.database().ref(`${dataRef}/items/${item.id}`).update(data)
+  //   .then(() =>)
+  // }
   // listen for data changes
   const db = firebase.database().ref(`${dataRef}/items`)
   db.on('value', (snapshot) => {
