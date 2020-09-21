@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Button, FlatList} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Button, FlatList, TextInput} from 'react-native';
 import {useNavigation} from '@react-navigation/native'
-import { TextInput } from 'react-native-gesture-handler'
+// import { TextInput } from 'react-native-gesture-handler'
 import {Select} from './Select'
 //Task Management Planner Screen
 export const HomeScreen = (props) => {
@@ -70,7 +70,8 @@ export const HomeScreen = (props) => {
                 style={homeStyle.input} 
                 placeholder="amount"
                 onChangeText={ (amount) => validateAmount(amount) } 
-                keyboardType='decimal-pad'/>
+                // keyboardType='decimal-pad'
+                />
                 <Select items ={selectItems} onSelect={setCategory}/>
                 <TextInput 
                 style={homeStyle.input} 
