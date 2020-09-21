@@ -20,8 +20,7 @@ import {TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function App() {
 
-  //list variable 
-  let listData = []
+  
 
   //state to see whether user is login or not
   const [auth,setAuth] = useState(false) 
@@ -29,9 +28,11 @@ export default function App() {
   const [updating, setUpdating] = useState(false)
 
   useEffect(()=> {
-    setUpdating(true)
     readData()
   })
+
+//list variable 
+  let listData = []
 
   const register = (intent, email,password) => {
     if(intent == 'register'){
@@ -48,15 +49,16 @@ export default function App() {
     if( !dataRef ) {
       return;
     }
+    setUpdating(false)
     const dataObj = { 
       amount: item.amount,
       note: item.note,
       category: item.category
     }
-    firebase.database().ref(`${dataRef}/items/${item.id}`).set(dataObj), ()=>{
-    //update state for rendering of list
-    setUpdating(true)
-    }
+    firebase.database().ref(`${dataRef}/items/${item.id}`).set(dataObj, () => {
+      // update state for rendering of list
+      setUpdating(true)
+    })
   }
 
   const readData = () => {
@@ -75,16 +77,20 @@ export default function App() {
           item.id = key
           listData.push(item)
         })
+        setUpdating(true)
       }
     })
-    setUpdating(true)
+    
   }
 
-  // const updateData = (item) => {
-  //   const data = {amount: item.amount, note: item.note, category: item.category}
-  //   firebase.database().ref(`${dataRef}/items/${item.id}`).update(data)
-  //   .then(() =>)
-  // }
+  const updateData = (item) => {
+    const data = {amount: item.amount,note: item.note, category: item.category }
+    firebase.database().ref(`${dataRef}/items/${item.id}`).update( data )
+    .then(() => {
+      // data is updated
+    })
+  }
+
   // listen for data changes
   const db = firebase.database().ref(`${dataRef}/items`)
   db.on('value', (snapshot) => {
@@ -118,15 +124,14 @@ export default function App() {
   return (
 
     <NavigationContainer>
+      
       {/* Each item in the stack is a screen */}
       <Stack.Navigator>
-        <Stack.Screen
-
-          name="Register">
+        <Stack.Screen name="Register">
           {(props) => <AuthScreen {...props} signup={register} loggedIn={auth}/>}
         </Stack.Screen>
 
-        <Stack.Screen 
+      <Stack.Screen 
           name="Home"
           options={({navigation,route}) => ({
             headerTitle: "Task Management",
@@ -144,10 +149,13 @@ export default function App() {
           { (props) => <HomeScreen {...props} 
             data={listData}
             add={addData} 
-           
+            extra={updating}
             /> }
         </Stack.Screen>
-        <Stack.Screen name ="Task_Detail" component={TaskDetailScreen}/>
+        <Stack.Screen name ="Task_Detail">
+        { (props) => <TaskDetailScreen {...props} 
+            update={updateData} /> }
+        </Stack.Screen>   
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -165,7 +173,9 @@ const styles = StyleSheet.create({
   },
   signout: {
     backgroundColor: '#777777',
-    padding: 5
+    padding: 5,
+    marginRight: 10,
+    borderRadius: 5,
   },
   signOutText: {
     color: '#cccccc'
