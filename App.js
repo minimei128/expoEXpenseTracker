@@ -18,57 +18,6 @@ import {TaskDetailScreen} from './components/TaskDetailScreen'
 import {AuthScreen} from './components/AuthScreen'
 import {TouchableOpacity } from 'react-native-gesture-handler';
 
-const Data = [
-  {
-    "amount": 50,
-    "category": "food",
-    "id": "1598241633",
-    "note": "buying lunch"
-  },
-  {
-    "amount": 20,
-    "category": "transport",
-    "id": "1598241768",
-    "note": "catching train"
-  },
-  {
-    "amount": 80,
-    "category": "groceries",
-    "id": "1598241782",
-    "note": "shopping at Coles"
-  },
-  {
-    "amount": 13,
-    "category": "food",
-    "id": "1598241795",
-    "note": "snack time"
-  },
-  {
-    "amount": 35,
-    "category": "entertainment",
-    "id": "1598241806",
-    "note": "buying Untitled Goose"
-  },
-  {
-    "amount": 350,
-    "category": "rent",
-    "id": "1598241817",
-    "note": "weeks rent"
-  },
-  {
-    "amount": 60,
-    "category": "transport",
-    "id": "1598241827",
-    "note": "topping up Opal card"
-  },
-  {
-    "amount": 30,
-    "category": "food",
-    "id": "1598241841",
-    "note": "buying dinner"
-  }
-]
-
 export default function App() {
 
   //list variable 
@@ -76,6 +25,7 @@ export default function App() {
 
   //state to see whether user is login or not
   const [auth,setAuth] = useState(false) 
+  const [dataRef,setDataRef] = useState(null)
 
 
   const register = (intent, email,password) => {
@@ -89,16 +39,48 @@ export default function App() {
     }
   }
 
+  const addData = (item) => {
+    if( !dataRef ) {
+      return;
+    }
+    const dataObj = { 
+      amount: item.amount,
+      note: item.note,
+      category: item.category
+    }
+    firebase.database().ref(`${dataRef}/items/${item.id}`).set(dataObj)
+  }
+
+  const readData = () => {
+    if(!dataRef) {
+      return
+    }
+
+    let data = []
+    firebase.database().ref(`${dataRef}/items`).on('value', (snapshot) => {
+      const dataObj = snapshot.val()
+      const keys = Object.keys( dataObj )
+      keys.forEach( (key) => {
+        let item = dataObj[key]
+        item.id = key
+        listData.push( item )
+      })
+    })
+  }
+
   firebase.auth().onAuthStateChanged( (user) => {
-    if (user){
+    if( user ) {
       setAuth(true)
-      console.log('user logged in')
+      setDataRef(`users/${user.uid}`)
+      // readData()
+      // console.log('user logged in')
     }
-    else{
+    else {
       setAuth(false)
-      console.log('user not logged in')
+      setDataRef(null)
+      // console.log('user not logged in')
     }
-  })
+  } )
 
 
   return (
@@ -126,9 +108,11 @@ export default function App() {
                 <Text style={styles.signOutText}>Sign out</Text>
               </TouchableOpacity>
             )
-          })}
-        >
-          { (props) => <HomeScreen {...props} data={listData} /> }
+          })}>
+          { (props) => <HomeScreen {...props} 
+            data={listData}
+            add={addData} 
+            /> }
         </Stack.Screen>
         <Stack.Screen name ="Task_Detail" component={TaskDetailScreen}/>
       </Stack.Navigator>

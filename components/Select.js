@@ -67,15 +67,15 @@ const selectStyles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   itemText:{
-    color: 'black',
+    color: 'white',
   },
   modalView: {
     marginTop: 180,
     marginLeft: 10,
-    backgroundColor: 'orange',
+    backgroundColor: '#f4511e',
     width: 340,
     borderStyle: 'solid',
-    borderColor: 'grey',
+    borderColor: 'white',
     borderWidth: 1,
     borderRadius: 5,
   },
