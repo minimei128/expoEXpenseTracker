@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { StyleSheet, Text, View} from 'react-native';
 import { NavigationContainer, StackActions } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
@@ -26,7 +26,12 @@ export default function App() {
   //state to see whether user is login or not
   const [auth,setAuth] = useState(false) 
   const [dataRef,setDataRef] = useState(null)
+  const [updating, setUpdating] = useState(false)
 
+  useEffect(()=> {
+    setUpdating(true)
+    readData()
+  })
 
   const register = (intent, email,password) => {
     if(intent == 'register'){
@@ -48,25 +53,45 @@ export default function App() {
       note: item.note,
       category: item.category
     }
-    firebase.database().ref(`${dataRef}/items/${item.id}`).set(dataObj)
+    firebase.database().ref(`${dataRef}/items/${item.id}`).set(dataObj), ()=>{
+    //update state for rendering of list
+    setUpdating(true)
+    }
   }
 
   const readData = () => {
     if(!dataRef) {
       return
     }
-    let data = []
-    firebase.database().ref(`${dataRef}/items`).on('value', (snapshot) => {
-      const dataObj = snapshot.val()
-      const keys = Object.keys( dataObj )
+    firebase.database().ref(`${dataRef}/items`).once('value')
+    .then((snapshot) => {
+      let data = snapshot.val()
+      if(data) {
+        let keys = Object.keys(data)
+        listData = []
+        keys.forEach((key) => {
+          let item = data[key]
+          item.id = key
+          listData.push(item)
+        })
+      }
+    })
+  }
+
+  // listen for data changes
+  const db = firebase.database().ref(`${dataRef}/items`)
+  db.on('value', (snapshot) => {
+    const dataObj = snapshot.val()
+    if(dataObj) {
+      let keys = Object.keys(dataObj)
+      listData = []
       keys.forEach( (key) => {
         let item = dataObj[key]
         item.id = key
-        listData.push( item )
+        listData.push(item)
       })
-      // listData = data;
-    })
-  }
+    }
+  })
 
   firebase.auth().onAuthStateChanged( (user) => {
     if( user ) {
@@ -112,6 +137,7 @@ export default function App() {
           { (props) => <HomeScreen {...props} 
             data={listData}
             add={addData} 
+           
             /> }
         </Stack.Screen>
         <Stack.Screen name ="Task_Detail" component={TaskDetailScreen}/>
