@@ -6,10 +6,10 @@ import {Select} from './Select'
 export const HomeScreen = (props) => {
     
         const selectItems = [
-          {label: "Food", value: "food"},
-          {label: "Transport", value: "transport"},
-          {label: "Groceries", value: "groceries"},
-          {label: "Bills", value: "bills"},
+          {label: "Food", value: "Food"},
+          {label: "Transport", value: "Transport"},
+          {label: "Groceries", value: "Groceries"},
+          {label: "Bills", value: "Bills"},
         ]
 
         useEffect(()=> {
@@ -67,12 +67,12 @@ export const HomeScreen = (props) => {
             <View>
                 <TextInput
                 style={homeStyle.input} 
-                placeholder="amount"
+                placeholder="Amount"
                 onChangeText={ (amount) => validateAmount(amount) } />
                 <Select items ={selectItems} onSelect={setCategory}/>
                 <TextInput 
                 style={homeStyle.input} 
-                placeholder="notes" 
+                placeholder="Notes" 
                 onChangeText={ (note) => setNote(note)}/>
                  <TouchableOpacity 
                  style={ validAmount && category ? homeStyle.button : homeStyle.buttonDisabled }
