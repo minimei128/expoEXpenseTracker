@@ -21,7 +21,7 @@ import {TouchableOpacity } from 'react-native-gesture-handler';
 export default function App() {
 
   //list variable 
-  const listData = Data
+  let listData = []
 
   //state to see whether user is login or not
   const [auth,setAuth] = useState(false) 
@@ -55,7 +55,6 @@ export default function App() {
     if(!dataRef) {
       return
     }
-
     let data = []
     firebase.database().ref(`${dataRef}/items`).on('value', (snapshot) => {
       const dataObj = snapshot.val()
@@ -65,6 +64,7 @@ export default function App() {
         item.id = key
         listData.push( item )
       })
+      listData = data;
     })
   }
 
@@ -72,7 +72,7 @@ export default function App() {
     if( user ) {
       setAuth(true)
       setDataRef(`users/${user.uid}`)
-      // readData()
+      readData()
       // console.log('user logged in')
     }
     else {
