@@ -97,7 +97,7 @@ export default function App() {
       setUpdating(true)
     })
   }
-  
+
   // listen for data changes
   const db = firebase.database().ref(`${dataRef}/items`)
   db.on('value', (snapshot) => {
@@ -117,13 +117,11 @@ export default function App() {
     if( user ) {
       setAuth(true)
       setDataRef(`users/${user.uid}`)
-      readData()
-      // console.log('user logged in')
     }
     else {
       setAuth(false)
       setDataRef(null)
-      // console.log('user not logged in')
+      
     }
   } )
 
@@ -131,7 +129,6 @@ export default function App() {
   return (
 
     <NavigationContainer>
-      
       {/* Each item in the stack is a screen */}
       <Stack.Navigator>
         <Stack.Screen name="Register">
@@ -161,7 +158,8 @@ export default function App() {
         </Stack.Screen>
         <Stack.Screen name ="Task_Detail">
         { (props) => <TaskDetailScreen {...props} 
-            update={updateData} /> }
+            update={updateData}
+            delete={deleteData} /> }
         </Stack.Screen>   
       </Stack.Navigator>
     </NavigationContainer>
