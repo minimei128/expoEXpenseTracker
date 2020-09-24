@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Modal, Image } from 'react-native'
 
 export const Select = (props) => {
-  const [selected,setSelected] = useState('select category')
+  const [selected,setSelected] = useState('Categories')
   const [visible, setVisible] = useState(false)
 
   const Items = props.items.map((item,index) => {
@@ -52,6 +52,7 @@ const selectStyles = StyleSheet.create({
     borderColor: '#cccccc',
     borderWidth: 1,
     borderRadius: 10,
+    backgroundColor: 'white'
   },
   selectImage: {
     width: 25,

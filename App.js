@@ -138,7 +138,7 @@ export default function App() {
       <Stack.Screen 
           name="Home"
           options={({navigation,route}) => ({
-            headerTitle: "Task Management",
+            headerTitle: "EXpense Tracker",
             headerRight: () => (
               <TouchableOpacity style={styles.signout} onPress={ () => {
                 firebase.auth().signOut().then( () => {
@@ -177,13 +177,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   signout: {
-    backgroundColor: '#777777',
+    backgroundColor: '#f4511e',
     padding: 5,
     marginRight: 10,
     borderRadius: 5,
   },
   signOutText: {
-    color: '#cccccc'
+    color: 'white'
   },
 
 });

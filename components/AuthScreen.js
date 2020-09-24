@@ -131,7 +131,26 @@ export const AuthScreen = (props) => {
                     }}>
                     <Text style={styles.altButtonText}>Register</Text>
                 </TouchableOpacity>
-        </View>
+                <Text style={styles.text}>Or</Text>
+                {/* Login button */}
+                <TouchableOpacity 
+                style={styles.fbButton}
+                // onPress={ () => {props.signup('login', email, password)}}
+                >
+                    <Image style={styles.iconBtn} source={require('../assets/facebook-brands.png')} />
+                    <Text style={styles.buttonText}>Sign In With Facebook</Text>
+                </TouchableOpacity>
+                {/* Login button */}
+                <TouchableOpacity 
+                style={styles.googleButton}
+                // onPress={ () => {props.signup('login', email, password)}}
+                >
+                    <Image style={styles.iconBtn} source={require('../assets/google-plus-brands.png')} />
+                    <Text style={styles.buttonText}>Sign In With Google</Text>
+                </TouchableOpacity>
+                
+     
+     </View>
             
         )
     }
@@ -161,13 +180,31 @@ const styles = StyleSheet.create({
         height: 40,
         paddingLeft: 6,
         margin: 10,
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        shadowColor: "#000",
+shadowOffset: {
+	width: 0,
+	height: 2,
+},
+shadowOpacity: 0.23,
+shadowRadius: 2.62,
+
+elevation: 4,
     },
     button: {
         padding: 13,
         backgroundColor:'#f4511e',
         borderRadius: 7,
-        margin: 10
+        margin: 10,
+        shadowColor: "#000",
+shadowOffset: {
+	width: 0,
+	height: 2,
+},
+shadowOpacity: 0.23,
+shadowRadius: 2.62,
+
+elevation: 4,
     
     },
     buttonText: {
@@ -179,7 +216,16 @@ const styles = StyleSheet.create({
         backgroundColor: '#f4511e',
         padding: 13,
         borderRadius: 7,
-        margin: 10
+        margin: 10,
+        shadowColor: "#000",
+shadowOffset: {
+	width: 0,
+	height: 2,
+},
+shadowOpacity: 0.23,
+shadowRadius: 2.62,
+
+elevation: 4,
     },
     altText:{
         textAlign: 'center',
@@ -196,5 +242,69 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: '#cccccc',
         paddingBottom: 10
-    }
+    },
+    text:{
+        color: 'black',
+        textAlign: 'center',
+    },
+    socialBtn:{
+        marginVertical: 15,
+        borderRadius: 7,
+        margin: 10,
+        shadowColor: "#000",
+shadowOffset: {
+	width: 0,
+	height: 2,
+},
+shadowOpacity: 0.23,
+shadowRadius: 2.62,
+
+elevation: 4,
+    
+
+
+    },
+    fbButton: {
+        display: 'flex',
+        flexDirection: 'row',
+        padding: 13,
+        backgroundColor:'#4267B2',
+        borderRadius: 7,
+        margin: 10,
+        shadowColor: "#000",
+shadowOffset: {
+	width: 0,
+	height: 2,
+},
+shadowOpacity: 0.23,
+shadowRadius: 2.62,
+
+elevation: 4,
+    
+    },
+
+    googleButton: {
+        display: 'flex',
+        flexDirection: 'row',
+        padding: 13,
+        backgroundColor:'#D44638',
+        borderRadius: 7,
+        margin: 10,
+        shadowColor: "#000",
+shadowOffset: {
+	width: 0,
+	height: 2,
+},
+shadowOpacity: 0.23,
+shadowRadius: 2.62,
+
+elevation: 4,
+    
+    },
+    iconBtn:{
+        width: 20,
+        height: 20,
+        marginRight: 60
+        
+    },
 })

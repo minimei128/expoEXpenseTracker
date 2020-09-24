@@ -39,12 +39,19 @@ export const TaskDetailScreen = (props) => {
           }
         } } 
       />
-      
+
           <DateFormat 
           date={props.route.params.id} 
           styling={styles.date} />
-          <Text>category: {props.route.params.category}</Text>
-          <Text>note: {props.route.params.note}</Text>
+          <Text style={styles.date}>{props.route.params.category}</Text>
+          <Text style={styles.date}>{props.route.params.note}</Text>
+          <Button 
+        title="Delete" 
+        onPress={ () => { 
+          props.delete(props.route.params.id) 
+          navigation.goBack()
+        }}
+      />
         </View>
       )
 }

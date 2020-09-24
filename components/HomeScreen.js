@@ -1,18 +1,21 @@
-import React, {useState, useEffect} from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Button, FlatList, TextInput} from 'react-native';
+import React, {useState, useEffect} from 'react'
+import { StyleSheet, Text, View, TouchableOpacity, Button, FlatList, Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native'
+import { TextInput } from 'react-native-gesture-handler'
 // import { TextInput } from 'react-native-gesture-handler'
 import {Select} from './Select'
 //Task Management Planner Screen
 export const HomeScreen = (props) => {
     
         const selectItems = [
-          {label: "Food", value: "food"},
-          {label: "Transport", value: "transport"},
-          {label: "Groceries", value: "groceries"},
-          {label: "Bills", value: "bills"},
-        ]
+          {label: "Food", value: "Food"},
+          {label: "Transport", value: "Transport"},
+          {label: "Groceries", value: "Groceries"},
+          {label: "Bills", value: "Bills"},
+          {label: "Travel", value: "Travel"},
+          {label: "Entertainment", value: "Entertainment"},
 
+        ]
         useEffect(()=> {
             console.log(props.data)
         })
@@ -65,34 +68,42 @@ export const HomeScreen = (props) => {
 
     return (
         <View style={homeStyle.container}>
-            <View>
+            <View style={homeStyle.headerWrapper}>
+                
                 <TextInput
-                style={homeStyle.input} 
-                placeholder="amount"
+                style={homeStyle.inputAmount} 
+                placeholder="Amount"
                 onChangeText={ (amount) => validateAmount(amount) } 
-                // keyboardType='decimal-pad'
+                keyboardType='decimal-pad'
                 />
-                <Select items ={selectItems} onSelect={setCategory}/>
+
+                <Select 
+                items ={selectItems} 
+                onSelect={setCategory}/>
+
                 <TextInput 
                 style={homeStyle.input} 
-                placeholder="notes" 
+                placeholder="Notes" 
                 onChangeText={ (note) => setNote(note)}/>
-                 <TouchableOpacity 
+
+                <TouchableOpacity 
                  style={ validAmount && category ? homeStyle.button : homeStyle.buttonDisabled }
                  disabled={ validAmount && category ? false : true }
                  onPress={ () => { addItem() } }>
-                    <Text style={homeStyle.buttonText}>Add</Text>
-                 </TouchableOpacity>
-            </View>
 
+                  <Text style={homeStyle.buttonText}>Add</Text>
+
+                </TouchableOpacity>
+
+            </View>
+          <View> 
             <FlatList
             data = {props.data}
             renderItem = {renderList}
             keyExtractor = { item => item.id}
             extraData = {props.extra}
             />
-            
-            
+            </View>
         </View>
     )
 }
@@ -119,10 +130,24 @@ const homeStyle = StyleSheet.create({
         paddingHorizontal: 15,
         paddingVertical: 20,
         borderBottomWidth: 1,
+        borderLeftWidth: 1,
+        borderRightWidth: 1,
+        borderLeftColor: '#cccccc',
+        borderRightColor: '#cccccc',
         borderBottomColor: '#cccccc',
         flexDirection: 'row',
         justifyContent: 'space-between',
+        backgroundColor: 'white',
+        marginTop: 5,
+        shadowColor: "#000",
+        shadowOffset: {
+	      width: 0,
+	      height: 2,
+},
+shadowOpacity: 0.23,
+shadowRadius: 2.62,
 
+elevation: 4,
     },
     input: {
         padding: 10,
@@ -131,20 +156,77 @@ const homeStyle = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: '#ffffff',
         marginVertical: 15,
+        shadowColor: "#000",
+        shadowOffset: {
+	      width: 0,
+	      height: 2,
+},
+        shadowOpacity: 0.23,
+        shadowRadius: 2.62,
+
+        elevation: 4,
+    },
+    inputAmount:{
+      padding: 10,
+      borderColor: '#cccccc',
+      borderWidth: 1,
+      borderRadius: 10,
+      backgroundColor: '#ffffff',
+      marginVertical: 15,
+      shadowColor: "#000",
+      shadowOffset: {
+      width: 1,
+      height: 2,
+},
+      shadowOpacity: 0.23,
+      shadowRadius: 2.62,
+
+      elevation: 4,
+
     },
     button: {
         backgroundColor: '#f4511e',
         padding: 10,
         borderRadius: 10,
+        shadowColor: "#000",
+        shadowOffset: {
+	      width: 0,
+	      height: 2,
+            },
+        shadowOpacity: 0.23,
+        shadowRadius: 2.62,
+
+        elevation: 4,
+        marginTop: 15,
       },
       buttonDisabled: {
         backgroundColor: '#ffd9b3',
         padding: 10,
         borderRadius: 10,
+        shadowColor: "#000",
+shadowOffset: {
+	width: 0,
+	height: 2,
+},
+shadowOpacity: 0.23,
+shadowRadius: 2.62,
+
+elevation: 4,
+marginTop: 15,
       },
       buttonText: {
         textAlign: 'center',
         color: 'white',
       },
+      icon:{
+        width: 100,
+        height: 100,
+        marginRight: 10
+        
+    },
+    headerWrapper:{
+      marginBottom: 15,
+      
+    },
 
 })
