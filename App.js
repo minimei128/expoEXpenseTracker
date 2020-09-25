@@ -20,18 +20,21 @@ import {TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function App() {
 
+  //initialize
+  const Stack = createStackNavigator()
+
   //state to see whether user is login or not
   const [auth,setAuth] = useState(false) 
   const [dataRef,setDataRef] = useState(null)
   const [updating, setUpdating] = useState(false)
 
-  useEffect(()=> {
-    readData()
-  })
+  //read data from firebase when load
+  useEffect(()=> {readData()})
 
-//list variable 
+  //list array 
   let listData = []
 
+  //function: create user with email and password when register and sign in with email and password
   const register = (intent, email,password) => {
     if(intent == 'register'){
       firebase.auth().createUserWithEmailAndPassword( email, password)
@@ -43,6 +46,7 @@ export default function App() {
     }
   }
 
+  //function: add data to firebase
   const addData = (item) => {
     if( !dataRef ) {
       return;
@@ -59,6 +63,7 @@ export default function App() {
     })
   }
 
+  //function: read data from firebase
   const readData = () => {
     if(!dataRef) {
       return
@@ -80,6 +85,7 @@ export default function App() {
     
   }
 
+ //function: update data in firebase
   const updateData = (item) => {
     setUpdating(false)
     const data = {amount: item.amount, note: item.note, category: item.category }
@@ -90,6 +96,7 @@ export default function App() {
     })
   }
 
+//function: delete data in firebase
   const deleteData = (id) => {
     setUpdating(false)
     firebase.database().ref(`${dataRef}/items/${id}`).remove()
@@ -113,6 +120,7 @@ export default function App() {
     }
   })
 
+  //function: authenicate user by email and password by firebase
   firebase.auth().onAuthStateChanged( (user) => {
     if( user ) {
       setAuth(true)
@@ -126,19 +134,28 @@ export default function App() {
   } )
 
 
+// fb login
+
+  // async loginWithFacebook() {
+  //       const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('660094484937948', {
+  //         permissions: ['public_profile', 'email']
+  //       })
+  //       if (type == 'success') {
+  //         //Firebase credential is created with the Facebook access token.
+  //         const credential = firebase.auth.FacebookAuthProvider.credential(token);
+  //         firebase.auth().signInWithCredential(credential).catch(error => {
+  //           console.log(error)
+  //         })
+  //       }
+  //     }
+
   return (
 
     <NavigationContainer>
       {/* Each item in the stack is a screen */}
       <Stack.Navigator>
-        <Stack.Screen name="Register">
-          {(props) => <AuthScreen {...props} signup={register} loggedIn={auth}/>}
-        </Stack.Screen>
-
-      <Stack.Screen 
-          name="Home"
-          options={({navigation,route}) => ({
-            headerTitle: "EXpense Tracker",
+        
+      <Stack.Screen name="Home" options={({navigation,route}) => ({ headerTitle: "EXpense Tracker",
             headerRight: () => (
               <TouchableOpacity style={styles.signout} onPress={ () => {
                 firebase.auth().signOut().then( () => {
@@ -146,7 +163,7 @@ export default function App() {
                   navigation.reset({ index: 0, routes: [{name: "Register"}] })
                 })
               }}>
-                <Text style={styles.signOutText}>Sign out</Text>
+              <Text style={styles.signOutText}>Sign out</Text>
               </TouchableOpacity>
             )
           })}>
@@ -154,20 +171,19 @@ export default function App() {
             data={listData}
             add={addData} 
             extra={updating}
-            /> }
-        </Stack.Screen>
-        <Stack.Screen name ="Task_Detail">
+            /> }</Stack.Screen>
+
+
+        <Stack.Screen name ="Info">
         { (props) => <TaskDetailScreen {...props} 
-            update={updateData}
-            delete={deleteData} /> }
-        </Stack.Screen>   
+            update={updateData} delete={deleteData} /> }
+        </Stack.Screen> 
+
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
 
-//initialize
-const Stack = createStackNavigator()
 
 const styles = StyleSheet.create({
   container: {
