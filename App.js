@@ -154,6 +154,10 @@ export default function App() {
     <NavigationContainer>
       {/* Each item in the stack is a screen */}
       <Stack.Navigator>
+
+      <Stack.Screen name="Register">
+          { (props) => <AuthScreen {...props} signup={ register } loggedIn={auth} /> }
+        </Stack.Screen>
         
       <Stack.Screen name="Home" options={({navigation,route}) => ({ headerTitle: "EXpense Tracker",
             headerRight: () => (

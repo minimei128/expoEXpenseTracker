@@ -113,11 +113,9 @@ const ListItem = (props) => {
     <TouchableOpacity onPress={ () => props.clickHandler(props.item)}>
         {/* show in each item the data for category and amount */}
         <View style={homeStyle.item}>
-            <Text style={[
-              ()
-
-            ]}>{props.category}</Text>
+            <Text>{props.category}</Text>
             <Text>{props.amount}</Text>
+             
         </View>
     </TouchableOpacity>
     )
