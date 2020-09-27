@@ -5,17 +5,18 @@ import { TextInput } from 'react-native-gesture-handler'
 //select picker
 import {Select} from './Select'
 
+
 //Task Management Planner Screen
 export const HomeScreen = (props) => {
     
         //categories list
         const selectItems = [
-          {label: "Food", value: "Food"},
-          {label: "Transport", value: "Transport"},
-          {label: "Groceries", value: "Groceries"},
-          {label: "Bills", value: "Bills"},
-          {label: "Travel", value: "Travel"},
-          {label: "Entertainment", value: "Entertainment"},
+          {label: "Food", image: require("../assets/food.png") , value: "Food"},
+          {label: "Transport", image: require("../assets/transport.png"), value: "Transport"},
+          {label: "Groceries", image: require("../assets/grocery.png"), value: "Groceries"},
+          {label: "Bills", image: require("../assets/bill.png"), value: "Bills"},
+          {label: "Travel", image: require("../assets/travel.png"), value: "Travel"},
+          {label: "Entertainment", image: require("../assets/entertainment.png"), value: "Entertainment"},
         ]
 
         useEffect(()=> {

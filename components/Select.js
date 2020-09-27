@@ -13,11 +13,12 @@ export const Select = (props) => {
         key={index} 
         onPress={()=> { 
           setSelected(item.value)
-          props.onSelect( item.value )
+          props.onSelect( item.value)
           setVisible(false) 
         }} 
       >
         <Text style={selectStyles.itemText}>{item.label}</Text>
+        <Image style={selectStyles.itemImage} source = {item.image}/>
       </TouchableOpacity>
     )
   })
@@ -46,6 +47,12 @@ export const Select = (props) => {
   )
 }
 
+// Icons made by <a href="https://www.flaticon.com/authors/wanicon" title="wanicon">wanicon</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
+// Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
+// Icons made by <a href="https://www.flaticon.com/authors/iconixar" title="iconixar">iconixar</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
+// Icons made by <a href="https://www.flaticon.com/authors/iconixar" title="iconixar">iconixar</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
+// Icons made by <a href="https://www.flaticon.com/authors/iconixar" title="iconixar">iconixar</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
+// Icons made by <a href="https://www.flaticon.com/authors/photo3idea-studio" title="photo3idea_studio">photo3idea_studio</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
 const selectStyles = StyleSheet.create({
   selectView: {
     padding: 10,
@@ -73,7 +80,7 @@ const selectStyles = StyleSheet.create({
   modalView: {
     marginTop: 180,
     marginLeft: 10,
-    backgroundColor: '#f4511e',
+    backgroundColor: 'black',
     width: 340,
     borderStyle: 'solid',
     borderColor: 'white',
@@ -87,4 +94,8 @@ const selectStyles = StyleSheet.create({
   Bills:{ color: 'red'},
   Travel:{ color: 'purple'},
   Entertainment:{ color: 'pink'},
+
+  // itemImage:{
+  //   width: 100,
+  // }
 })

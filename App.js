@@ -13,6 +13,8 @@ if ( !firebase.apps.length ){
   firebase.initializeApp( firebaseConfig )
 }
 
+// import * as Google from 'expo-google-app-auth';
+
 import {HomeScreen} from './components/HomeScreen'
 import {TaskDetailScreen} from './components/TaskDetailScreen'
 import {AuthScreen} from './components/AuthScreen'
@@ -33,6 +35,18 @@ export default function App() {
 
   //list array 
   let listData = []
+
+  // const { type, accessToken, user } = await Google.logInAsync({
+  //   iosClientId: `<YOUR_IOS_CLIENT_ID_FOR_EXPO>`,
+  //   androidClientId: `<YOUR_ANDROID_CLIENT_ID_FOR_EXPO>`,
+  //   iosStandaloneAppClientId: `<YOUR_IOS_CLIENT_ID>`,
+  //   androidStandaloneAppClientId: `<YOUR_ANDROID_CLIENT_ID>`,
+  // });
+
+  // if (type === 'success') {
+  //   /* `accessToken` is now valid and can be used to get data from the Google API with HTTP requests */
+  //   console.log(user);
+  // }
 
   //function: create user with email and password when register and sign in with email and password
   const register = (intent, email,password) => {
