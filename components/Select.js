@@ -80,4 +80,11 @@ const selectStyles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
   },
+
+  Food:{ color: 'blue'},
+  Transport:{ color: 'green'},
+  Groceries:{ color: 'orange'},
+  Bills:{ color: 'red'},
+  Travel:{ color: 'purple'},
+  Entertainment:{ color: 'pink'},
 })

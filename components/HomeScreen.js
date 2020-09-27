@@ -60,6 +60,7 @@ export const HomeScreen = (props) => {
         amount={item.amount} 
         category={item.category}
         clickHandler = {showDetail}
+        // onDelete = {this.delete}
         item = {item}/>
     )
     //function: each item navigate to show more info
@@ -72,6 +73,11 @@ export const HomeScreen = (props) => {
     return (
         <View style={homeStyle.container}>
             <View style={homeStyle.headerWrapper}>
+
+
+              {/* Text Amount Set */}
+          <Text style={homeStyle.text}>Total Amount:</Text>
+          <Text style={homeStyle.amount}> $ {amount}</Text>
              
              {/* Input Amount */}
                 <TextInput style={homeStyle.inputAmount} placeholder="Amount"
@@ -115,6 +121,10 @@ const ListItem = (props) => {
         <View style={homeStyle.item}>
             <Text>{props.category}</Text>
             <Text>{props.amount}</Text>
+               {/* Delete item button */}
+          {/* <TouchableOpacity style={homeStyle.deleteBtn} onPress={ () => { props.delete(props.route.params.id) }}>
+            <Image style={homeStyle.iconBtn} source={require('../assets/trash-solid.png')} />
+            </TouchableOpacity> */}
              
         </View>
     </TouchableOpacity>
@@ -125,6 +135,13 @@ const homeStyle = StyleSheet.create({
     container:{
         flex:1,
         paddingHorizontal: 10,
+        paddingTop: 20,
+    },
+    text:{
+        fontWeight:"700",
+        color: "#f4511e",
+        textDecorationLine: "underline",
+        textAlign: "center"
     },
     item: {
         paddingHorizontal: 15,
@@ -231,11 +248,37 @@ const homeStyle = StyleSheet.create({
       backgroundColor: 'white',
     },
 
-    Food:{ color: 'blue'},
-    Transport:{ color: 'green'},
-    Groceries:{ color: 'orange'},
-    Bills:{ color: 'red'},
-    Travel:{ color: 'purple'},
-    Entertainment:{ color: 'pink'},
+    deleteBtn:{
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      backgroundColor: 'red',
+        padding: 10,
+        borderRadius: 10,
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2,},
+        shadowOpacity: 0.23,
+        shadowRadius: 2.62, 
+        elevation: 4,
+        
+    },
 
+    iconBtn:{
+      width: 15,
+      height: 15,
+  },
+  amount: {
+    textAlign: 'center',
+    fontSize: 50,
+    fontWeight: '700',
+    borderWidth: 1,
+    borderColor: '#cccccc',
+    marginBottom: 10,
+    backgroundColor: 'white',
+    marginLeft: 50,
+    marginRight: 50,
+
+  },
 })

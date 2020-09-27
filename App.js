@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View, Image} from 'react-native';
 import { NavigationContainer, StackActions } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
@@ -134,20 +134,20 @@ export default function App() {
   } )
 
 
-// fb login
+// // fb login
 
-  // async loginWithFacebook() {
-  //       const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('660094484937948', {
-  //         permissions: ['public_profile', 'email']
-  //       })
-  //       if (type == 'success') {
-  //         //Firebase credential is created with the Facebook access token.
-  //         const credential = firebase.auth.FacebookAuthProvider.credential(token);
-  //         firebase.auth().signInWithCredential(credential).catch(error => {
-  //           console.log(error)
-  //         })
-  //       }
-  //     }
+//   async loginWithFacebook() {
+//         const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('660094484937948', {
+//           permissions: ['public_profile', 'email']
+//         })
+//         if (type == 'success') {
+//           //Firebase credential is created with the Facebook access token.
+//           const credential = firebase.auth.FacebookAuthProvider.credential(token);
+//           firebase.auth().signInWithCredential(credential).catch((error) => {
+//             console.log(error)
+//           })
+//         }
+//       }
 
   return (
 
@@ -160,7 +160,9 @@ export default function App() {
         </Stack.Screen>
         
       <Stack.Screen name="Home" options={({navigation,route}) => ({ headerTitle: "EXpense Tracker",
+            
             headerRight: () => (
+              
               <TouchableOpacity style={styles.signout} onPress={ () => {
                 firebase.auth().signOut().then( () => {
                   setAuth(false)
@@ -174,6 +176,7 @@ export default function App() {
           { (props) => <HomeScreen {...props} 
             data={listData}
             add={addData} 
+            // delete={deleteData}
             extra={updating}
             /> }</Stack.Screen>
 
@@ -205,6 +208,10 @@ const styles = StyleSheet.create({
   signOutText: {
     color: 'white'
   },
-
+  iconBtn:{
+    width: 20,
+    height: 20,
+    marginRight: 60 
+},
 });
 

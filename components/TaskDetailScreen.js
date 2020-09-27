@@ -7,12 +7,16 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 //Task Detail Screen
 export const TaskDetailScreen = (props) => {
     const [amount, setAmount] = useState(props.route.params.amount)
+    const [note, setNote] = useState(props.route.params.note)
+    const [editingNote, setEditingNote] = useState(false)
     const [editing, setEditing] = useState(false)
 
     const navigation = useNavigation()
 
     return (
         <View style={styles.container}>
+            {/* Display: Category when item is submitted */}
+            <Text style={styles.bodyCategory}>{props.route.params.category}</Text>
            {/* Display: Date when item is submitted */}
            <DateFormat date={props.route.params.id} styling={styles.date} />
           {/* Text Amount Set */}
@@ -47,10 +51,32 @@ export const TaskDetailScreen = (props) => {
             </View>
             
           <View style={styles.body}>
-             {/* Display: Category when item is submitted */}
-          <Text style={styles.bodyCategory}>Category: {props.route.params.category}</Text>
+            
             {/* Display: Note when item is submitted */}
-          <Text style={styles.bodyNote}>Notes: {props.route.params.note}</Text>
+          {/* Button to save edit note */}
+          <TouchableOpacity style={styles.bodyNote} title={ editingNote? "save" : "edit" } 
+                     onPress={ () => { 
+                       if( editingNote ) {
+                          setEditingNote(false)
+                          let item = {
+                            amount: props.route.params.amount,
+                            note: note,
+                            category: props.route.params.category,
+                            id: props.route.params.id }
+                          props.update( item )}
+                          else {
+                          setEditingNote(true)}
+                        } }>
+                          <Text style={styles.bodyTitle}>Note</Text>
+                          <Image style={styles.iconBtn} source={require('../assets/edit-solid.png')} />
+                          </TouchableOpacity>
+          
+          <Text style={{ display: editingNote ? 'none' : 'flex'}} >{note}</Text>
+          {/* Edit Amount */}
+          <TextInput style={ {display: editingNote ? 'flex' : 'none'}} 
+                     placeholder= {note}
+                     onChangeText={(note) => {setNote(note)}}/>
+          
           </View>
         </View>
       )
@@ -77,6 +103,8 @@ body:{
       borderColor: '#cccccc',
       marginBottom: 10,
       backgroundColor: 'white',
+      marginLeft: 50,
+      marginRight: 50,
 
     },
     date: {
@@ -138,15 +166,26 @@ bodyCategory: {
   backgroundColor: '#EE6352',
   padding: 10,
   color: 'white',
-  justifyContent: 'flex-start'
+  justifyContent: 'flex-start',
+  fontSize: 30,
+},
+
+bodyTitle: {
+  
+  fontWeight: '700',
+  color: 'white',
+  textDecorationLine: 'underline',
+  fontSize: 18,
 },
 
 bodyNote: {
-  
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-between',
   fontWeight: '700',
   backgroundColor: '#3FA7D6',
   padding: 10,
-  color: 'white',
+  
 },
 
   })
