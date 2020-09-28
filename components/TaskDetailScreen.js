@@ -163,7 +163,7 @@ btnWrapper:{
 bodyCategory: {
   
   fontWeight: '700',
-  backgroundColor: '#EE6352',
+  backgroundColor: 'black',
   padding: 10,
   color: 'white',
   justifyContent: 'flex-start',

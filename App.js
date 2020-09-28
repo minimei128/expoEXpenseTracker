@@ -148,9 +148,9 @@ export default function App() {
   } )
 
 
-// // fb login
+// // // fb login
 
-//   async loginWithFacebook() {
+//   const fbLogin = async loginWithFacebook() => {
 //         const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('660094484937948', {
 //           permissions: ['public_profile', 'email']
 //         })

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { StyleSheet, Text, View, TouchableOpacity, Button, FlatList, Image} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Button, FlatList, Image, ScrollView} from 'react-native';
 import {useNavigation} from '@react-navigation/native'
 import { TextInput } from 'react-native-gesture-handler'
 //select picker
@@ -61,7 +61,6 @@ export const HomeScreen = (props) => {
         amount={item.amount} 
         category={item.category}
         clickHandler = {showDetail}
-        // onDelete = {this.delete}
         item = {item}/>
     )
     //function: each item navigate to show more info
@@ -76,9 +75,9 @@ export const HomeScreen = (props) => {
             <View style={homeStyle.headerWrapper}>
 
 
-              {/* Text Amount Set */}
+              {/* Text Amount Set
           <Text style={homeStyle.text}>Total Amount:</Text>
-          <Text style={homeStyle.amount}> $ {amount}</Text>
+          <Text style={homeStyle.amount}> $ {amount}</Text> */}
              
              {/* Input Amount */}
                 <TextInput style={homeStyle.inputAmount} placeholder="Amount"
@@ -89,26 +88,31 @@ export const HomeScreen = (props) => {
                 <Select items ={selectItems} onSelect={setCategory}/>
 
               {/* Input Notes */}
-                <TextInput style={homeStyle.input} placeholder="Notes" 
-                onChangeText={ (note) => setNote(note)}/>
+              <TextInput 
+                style={homeStyle.input} 
+                placeholder="Notes" 
+                onChangeText={ (note) => setNote(note)}
+        />
 
               {/* Add button */}
                 <TouchableOpacity 
                  style={ validAmount && category ? homeStyle.button : homeStyle.buttonDisabled }
                  disabled={ validAmount && category ? false : true }
-                 onPress={ () => { addItem() } }>
+                 onPress={ () => { addItem()} }
+                 >
                   <Text style={homeStyle.buttonText}>Add</Text>
                 </TouchableOpacity>
             </View>
-          <View> 
 
             {/* List of Items */}
             <FlatList
                 data = {props.data}
                 renderItem = {renderList}
                 keyExtractor = { item => item.id}
-                extraData = {props.extra}/>
-            </View>
+                extraData = {props.extra}
+                />
+            
+           
         </View>
     )
 }
@@ -122,10 +126,7 @@ const ListItem = (props) => {
         <View style={homeStyle.item}>
             <Text>{props.category}</Text>
             <Text>{props.amount}</Text>
-               {/* Delete item button */}
-          {/* <TouchableOpacity style={homeStyle.deleteBtn} onPress={ () => { props.delete(props.route.params.id) }}>
-            <Image style={homeStyle.iconBtn} source={require('../assets/trash-solid.png')} />
-            </TouchableOpacity> */}
+          
              
         </View>
     </TouchableOpacity>
@@ -170,7 +171,7 @@ const homeStyle = StyleSheet.create({
         borderColor: '#cccccc',
         borderWidth: 1,
         borderRadius: 10,
-        backgroundColor: '#ffffff',
+        backgroundColor: '#3FA7D6',
         marginVertical: 15,
         shadowColor: "#000",
         shadowOffset: {
@@ -253,16 +254,8 @@ const homeStyle = StyleSheet.create({
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'center',
-      backgroundColor: 'red',
         padding: 10,
-        borderRadius: 10,
-        shadowColor: "#000",
-        shadowOffset: {
-          width: 0,
-          height: 2,},
-        shadowOpacity: 0.23,
-        shadowRadius: 2.62, 
-        elevation: 4,
+        
         
     },
 
@@ -280,6 +273,6 @@ const homeStyle = StyleSheet.create({
     backgroundColor: 'white',
     marginLeft: 50,
     marginRight: 50,
-
   },
+
 })
