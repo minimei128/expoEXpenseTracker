@@ -16,7 +16,13 @@ export const Select = (props) => {
           setVisible(false) 
         }} 
       >
+        <View style={selectStyles.itemLayout}>
         <Text style={selectStyles.text}>{item.label}</Text>
+        <Image 
+          style={selectStyles.itemImage} 
+          source={item.image} 
+        />
+        </View>
       </TouchableOpacity>
     )
   })
